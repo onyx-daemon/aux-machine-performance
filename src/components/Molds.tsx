@@ -288,13 +288,27 @@ const Molds: React.FC = () => {
 
       {/* Create Mold Modal */}
       {isCreating && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 rounded-lg border border-gray-700 w-full max-w-md mx-4">
-            <div className="flex items-center justify-between p-6 border-b border-gray-700">
-              <h3 className="text-lg font-semibold text-white">Create New Mold</h3>
+        <div className={`fixed inset-0 flex items-center justify-center z-50 ${
+          isDarkMode ? 'bg-black bg-opacity-50' : 'bg-gray-900 bg-opacity-50'
+        }`}>
+          <div className={`rounded-lg border w-full max-w-md mx-4 ${
+            isDarkMode 
+              ? 'bg-gray-800 border-gray-700' 
+              : 'bg-white border-gray-200'
+          }`}>
+            <div className={`flex items-center justify-between p-6 border-b ${
+              isDarkMode ? 'border-gray-700' : 'border-gray-200'
+            }`}>
+              <h3 className={`text-lg font-semibold ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>Create New Mold</h3>
               <button
                 onClick={() => setIsCreating(false)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className={`transition-colors ${
+                  isDarkMode 
+                    ? 'text-gray-400 hover:text-white' 
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -302,7 +316,9 @@ const Molds: React.FC = () => {
 
             <form onSubmit={handleCreateMold} className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Mold Name *
                 </label>
                 <input
@@ -311,13 +327,19 @@ const Molds: React.FC = () => {
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter mold name"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Description
                 </label>
                 <textarea
@@ -325,13 +347,19 @@ const Molds: React.FC = () => {
                   value={formData.description}
                   onChange={handleInputChange}
                   rows={3}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter mold description"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Production Capacity (units/hour) *
                 </label>
                 <input
@@ -341,13 +369,19 @@ const Molds: React.FC = () => {
                   min="1"
                   value={formData.productionCapacityPerHour}
                   onChange={handleNumberInputChange}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter production capacity"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Department *
                 </label>
                 <select
@@ -355,7 +389,11 @@ const Molds: React.FC = () => {
                   required
                   value={formData.departmentId}
                   onChange={handleInputChange}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                 >
                   <option value="">Select department</option>
                   {departments.map((dept) => (
@@ -367,7 +405,9 @@ const Molds: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Active Status
                 </label>
                 <div className="flex items-center">
@@ -379,8 +419,12 @@ const Molds: React.FC = () => {
                       onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    <span className="ml-3 text-sm text-gray-300">
+                    <div className={`w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 ${
+                      isDarkMode ? 'bg-gray-700' : 'bg-gray-300'
+                    }`}></div>
+                    <span className={`ml-3 text-sm ${
+                      isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                       {formData.isActive ? 'Active' : 'Inactive'}
                     </span>
                   </label>
@@ -398,7 +442,11 @@ const Molds: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsCreating(false)}
-                  className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                  className={`px-4 py-2 rounded-md transition-colors ${
+                    isDarkMode 
+                      ? 'bg-gray-600 text-white hover:bg-gray-700' 
+                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                  }`}
                 >
                   Cancel
                 </button>
@@ -410,13 +458,27 @@ const Molds: React.FC = () => {
 
       {/* Edit Mold Modal */}
       {editingMold && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 rounded-lg border border-gray-700 w-full max-w-md mx-4">
-            <div className="flex items-center justify-between p-6 border-b border-gray-700">
-              <h3 className="text-lg font-semibold text-white">Edit Mold</h3>
+        <div className={`fixed inset-0 flex items-center justify-center z-50 ${
+          isDarkMode ? 'bg-black bg-opacity-50' : 'bg-gray-900 bg-opacity-50'
+        }`}>
+          <div className={`rounded-lg border w-full max-w-md mx-4 ${
+            isDarkMode 
+              ? 'bg-gray-800 border-gray-700' 
+              : 'bg-white border-gray-200'
+          }`}>
+            <div className={`flex items-center justify-between p-6 border-b ${
+              isDarkMode ? 'border-gray-700' : 'border-gray-200'
+            }`}>
+              <h3 className={`text-lg font-semibold ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>Edit Mold</h3>
               <button
                 onClick={() => setEditingMold(null)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className={`transition-colors ${
+                  isDarkMode 
+                    ? 'text-gray-400 hover:text-white' 
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -424,7 +486,9 @@ const Molds: React.FC = () => {
 
             <form onSubmit={handleUpdateMold} className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Mold Name *
                 </label>
                 <input
@@ -433,13 +497,19 @@ const Molds: React.FC = () => {
                   required
                   value={editingMold.name}
                   onChange={handleInputChange}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter mold name"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Description
                 </label>
                 <textarea
@@ -447,13 +517,19 @@ const Molds: React.FC = () => {
                   value={editingMold.description || ''}
                   onChange={handleInputChange}
                   rows={3}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter mold description"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Production Capacity (units/hour) *
                 </label>
                 <input
@@ -463,13 +539,19 @@ const Molds: React.FC = () => {
                   min="1"
                   value={editingMold.productionCapacityPerHour}
                   onChange={handleNumberInputChange}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter production capacity"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Department *
                 </label>
                 <select
@@ -479,7 +561,11 @@ const Molds: React.FC = () => {
                     ? editingMold.departmentId 
                     : editingMold.departmentId._id}
                   onChange={handleInputChange}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                 >
                   <option value="">Select department</option>
                   {departments.map((dept) => (
@@ -491,7 +577,9 @@ const Molds: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Active Status
                 </label>
                 <div className="flex items-center">
@@ -503,8 +591,12 @@ const Molds: React.FC = () => {
                       onChange={(e) => setEditingMold({ ...editingMold, isActive: e.target.checked })}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    <span className="ml-3 text-sm text-gray-300">
+                    <div className={`w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 ${
+                      isDarkMode ? 'bg-gray-700' : 'bg-gray-300'
+                    }`}></div>
+                    <span className={`ml-3 text-sm ${
+                      isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                       {editingMold.isActive ? 'Active' : 'Inactive'}
                     </span>
                   </label>
@@ -522,7 +614,11 @@ const Molds: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setEditingMold(null)}
-                  className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                  className={`px-4 py-2 rounded-md transition-colors ${
+                    isDarkMode 
+                      ? 'bg-gray-600 text-white hover:bg-gray-700' 
+                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                  }`}
                 >
                   Cancel
                 </button>
@@ -533,59 +629,95 @@ const Molds: React.FC = () => {
       )}
 
       {/* Molds List */}
-      <div className="bg-gray-800 rounded-lg border border-gray-700">
-        <div className="p-6 border-b border-gray-700">
-          <h2 className="text-lg font-semibold text-white">Production Molds</h2>
+      <div className={`rounded-lg border ${
+        isDarkMode 
+          ? 'bg-gray-800 border-gray-700' 
+          : 'bg-white border-gray-200 shadow-sm'
+      }`}>
+        <div className={`p-6 border-b ${
+          isDarkMode ? 'border-gray-700' : 'border-gray-200'
+        }`}>
+          <h2 className={`text-lg font-semibold ${
+            isDarkMode ? 'text-white' : 'text-gray-900'
+          }`}>Production Molds</h2>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-700">
-            <thead className="bg-gray-750">
+          <table className={`min-w-full divide-y ${
+            isDarkMode ? 'divide-gray-700' : 'divide-gray-200'
+          }`}>
+            <thead className={isDarkMode ? 'bg-gray-750' : 'bg-gray-50'}>
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th scope="col" className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Mold
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th scope="col" className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Department
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th scope="col" className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Capacity
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th scope="col" className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Status
                 </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th scope="col" className={`px-6 py-3 text-right text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-gray-800 divide-y divide-gray-700">
+            <tbody className={`divide-y ${
+              isDarkMode 
+                ? 'bg-gray-800 divide-gray-700' 
+                : 'bg-white divide-gray-200'
+            }`}>
               {filteredMolds.length > 0 ? (
                 filteredMolds.map((mold) => (
-                  <tr key={mold._id} className="hover:bg-gray-750">
+                  <tr key={mold._id} className={
+                    isDarkMode ? 'hover:bg-gray-750' : 'hover:bg-gray-50'
+                  }>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className={`flex-shrink-0 h-10 w-10 rounded-lg flex items-center justify-center ${
-                          mold.isActive ? 'bg-blue-500' : 'bg-gray-600'
+                          mold.isActive 
+                            ? (isDarkMode ? 'bg-blue-500' : 'bg-blue-500') 
+                            : (isDarkMode ? 'bg-gray-600' : 'bg-gray-400')
                         }`}>
                           <PackageOpen className="h-6 w-6 text-white" />
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-white">
+                          <div className={`text-sm font-medium ${
+                            isDarkMode ? 'text-white' : 'text-gray-900'
+                          }`}>
                             {mold.name}
                           </div>
-                          <div className="text-xs text-gray-400 line-clamp-1">
+                          <div className={`text-xs line-clamp-1 ${
+                            isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                          }`}>
                             {mold.description || 'No description'}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-300">
+                      <div className={`text-sm ${
+                        isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                      }`}>
                         {getDepartmentName(mold)}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    <td className={`px-6 py-4 whitespace-nowrap text-sm ${
+                      isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                       {mold.productionCapacityPerHour} units/hour
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -609,7 +741,11 @@ const Molds: React.FC = () => {
                                 : mold.departmentId
                             });
                           }}
-                          className="text-blue-400 hover:text-blue-300 p-1 rounded-md hover:bg-gray-700"
+                          className={`p-1 rounded-md transition-colors ${
+                            isDarkMode 
+                              ? 'text-blue-400 hover:text-blue-300 hover:bg-gray-700' 
+                              : 'text-blue-500 hover:text-blue-700 hover:bg-blue-50'
+                          }`}
                           title="Edit"
                         >
                           <Edit className="h-4 w-4" />
@@ -617,10 +753,10 @@ const Molds: React.FC = () => {
                         <button
                           onClick={() => handleToggleStatus(mold._id, mold.isActive)}
                           disabled={statusTogglingId === mold._id}
-                          className={`p-1 rounded-md hover:bg-gray-700 ${
+                          className={`p-1 rounded-md transition-colors ${
                             mold.isActive 
-                              ? 'text-yellow-400 hover:text-yellow-300' 
-                              : 'text-green-400 hover:text-green-300'
+                              ? (isDarkMode ? 'text-yellow-400 hover:text-yellow-300 hover:bg-gray-700' : 'text-yellow-500 hover:text-yellow-700 hover:bg-yellow-50')
+                              : (isDarkMode ? 'text-green-400 hover:text-green-300 hover:bg-gray-700' : 'text-green-500 hover:text-green-700 hover:bg-green-50')
                           } ${statusTogglingId === mold._id ? 'opacity-50' : ''}`}
                           title={mold.isActive ? 'Deactivate' : 'Activate'}
                         >
@@ -635,7 +771,11 @@ const Molds: React.FC = () => {
                         <button
                           onClick={() => handleDelete(mold._id)}
                           disabled={deletingId === mold._id}
-                          className={`text-red-400 hover:text-red-300 p-1 rounded-md hover:bg-gray-700 ${
+                          className={`p-1 rounded-md transition-colors ${
+                            isDarkMode 
+                              ? 'text-red-400 hover:text-red-300 hover:bg-gray-700' 
+                              : 'text-red-500 hover:text-red-700 hover:bg-red-50'
+                          } ${
                             deletingId === mold._id ? 'opacity-50' : ''
                           }`}
                           title="Delete"
@@ -654,9 +794,15 @@ const Molds: React.FC = () => {
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center justify-center">
-                      <PackageOpen className="h-12 w-12 text-gray-600 mb-4" />
-                      <h3 className="text-lg font-medium text-gray-400 mb-2">No molds found</h3>
-                      <p className="text-gray-500 max-w-md">
+                      <PackageOpen className={`h-12 w-12 mb-4 ${
+                        isDarkMode ? 'text-gray-600' : 'text-gray-400'
+                      }`} />
+                      <h3 className={`text-lg font-medium mb-2 ${
+                        isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                      }`}>No molds found</h3>
+                      <p className={`max-w-md ${
+                        isDarkMode ? 'text-gray-500' : 'text-gray-500'
+                      }`}>
                         {searchTerm 
                           ? `No molds match your search for "${searchTerm}"` 
                           : 'Get started by creating your first mold'}
