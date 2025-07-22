@@ -203,13 +203,13 @@ const MachineView: React.FC = () => {
   if (!machine || !stats) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-400">Machine not found</p>
+        <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Machine not found</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${isDarkMode ? '' : 'min-h-screen bg-gray-50'}`}>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -220,7 +220,7 @@ const MachineView: React.FC = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme={isDarkMode ? "dark" : "light"}
       />
       
       {/* Header */}
@@ -228,7 +228,7 @@ const MachineView: React.FC = () => {
         <div className="flex items-center space-x-4">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
+            className={`p-2 rounded-md transition-colors ${isDarkMode ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
@@ -238,20 +238,28 @@ const MachineView: React.FC = () => {
                 name="name"
                 value={editForm.name}
                 onChange={handleEditChange}
-                className="text-2xl font-bold text-white bg-gray-700 border border-gray-600 rounded px-2 py-1 w-full"
+                className={`text-2xl font-bold rounded px-2 py-1 w-full ${
+                  isDarkMode 
+                    ? 'text-white bg-gray-700 border-gray-600' 
+                    : 'text-gray-900 bg-white border-gray-300'
+                } border`}
               />
               <textarea
                 name="description"
                 value={editForm.description}
                 onChange={handleEditChange}
-                className="text-gray-400 bg-gray-700 border border-gray-600 rounded px-2 py-1 w-full text-sm"
+                className={`rounded px-2 py-1 w-full text-sm border ${
+                  isDarkMode 
+                    ? 'text-gray-400 bg-gray-700 border-gray-600' 
+                    : 'text-gray-600 bg-white border-gray-300'
+                }`}
                 rows={2}
               />
             </div>
           ) : (
             <div>
-              <h1 className="text-2xl font-bold text-white">{machine.name}</h1>
-              <p className="text-gray-400">{machine.description}</p>
+              <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{machine.name}</h1>
+              <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>{machine.description}</p>
             </div>
           )}
         </div>
@@ -266,7 +274,9 @@ const MachineView: React.FC = () => {
             <div className="flex space-x-2">
               <button
                 onClick={() => setIsEditing(false)}
-                className="px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                className={`px-3 py-2 text-white rounded-md transition-colors ${
+                  isDarkMode ? 'bg-gray-600 hover:bg-gray-700' : 'bg-gray-500 hover:bg-gray-600'
+                }`}
               >
                 Cancel
               </button>
@@ -280,7 +290,7 @@ const MachineView: React.FC = () => {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
+              className={`p-2 rounded-md transition-colors ${isDarkMode ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}
               title="Edit machine details"
             >
               <Edit className="h-5 w-5" />
@@ -291,34 +301,50 @@ const MachineView: React.FC = () => {
 
       {/* Key Metrics - Compact Layout */}
       <div className="grid grid-cols-4 gap-2">
-        <div className="bg-gray-800 p-3 rounded-lg border border-gray-700 flex items-center">
+        <div className={`p-3 rounded-lg border flex items-center ${
+          isDarkMode 
+            ? 'bg-gray-800 border-gray-700' 
+            : 'bg-white border-gray-200 shadow-sm'
+        }`}>
           <TrendingUp className="h-6 w-6 text-green-400 mr-3" />
           <div>
-            <p className="text-xs text-gray-400">Units</p>
-            <p className="text-lg font-semibold text-white">{stats.totalUnitsProduced}</p>
+            <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Units</p>
+            <p className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{stats.totalUnitsProduced}</p>
           </div>
         </div>
 
-        <div className="bg-gray-800 p-3 rounded-lg border border-gray-700 flex items-center">
+        <div className={`p-3 rounded-lg border flex items-center ${
+          isDarkMode 
+            ? 'bg-gray-800 border-gray-700' 
+            : 'bg-white border-gray-200 shadow-sm'
+        }`}>
           <Gauge className="h-6 w-6 text-yellow-400 mr-3" />
           <div>
-            <p className="text-xs text-gray-400">OEE</p>
+            <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>OEE</p>
             <p className="text-lg font-semibold text-yellow-400">{stats.oee}%</p>
           </div>
         </div>
 
-        <div className="bg-gray-800 p-3 rounded-lg border border-gray-700 flex items-center">
+        <div className={`p-3 rounded-lg border flex items-center ${
+          isDarkMode 
+            ? 'bg-gray-800 border-gray-700' 
+            : 'bg-white border-gray-200 shadow-sm'
+        }`}>
           <Clock className="h-6 w-6 text-blue-400 mr-3" />
           <div>
-            <p className="text-xs text-gray-400">MTBF</p>
+            <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>MTBF</p>
             <p className="text-lg font-semibold text-blue-400">{stats.mtbf}m</p>
           </div>
         </div>
 
-        <div className="bg-gray-800 p-3 rounded-lg border border-gray-700 flex items-center">
+        <div className={`p-3 rounded-lg border flex items-center ${
+          isDarkMode 
+            ? 'bg-gray-800 border-gray-700' 
+            : 'bg-white border-gray-200 shadow-sm'
+        }`}>
           <Activity className="h-6 w-6 text-purple-400 mr-3" />
           <div>
-            <p className="text-xs text-gray-400">MTTR</p>
+            <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>MTTR</p>
             <p className="text-lg font-semibold text-purple-400">{stats.mttr}m</p>
           </div>
         </div>
@@ -326,7 +352,7 @@ const MachineView: React.FC = () => {
 
       {/* Time Period Selector */}
       <div className="flex items-center space-x-2">
-        <span className="text-sm text-gray-400">Time Period:</span>
+        <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Time Period:</span>
         <div className="flex space-x-1">
           {[
             { value: '24h', label: '24 Hours' },
@@ -339,7 +365,9 @@ const MachineView: React.FC = () => {
               className={`px-3 py-1 text-sm rounded-md transition-colors ${
                 selectedPeriod === period.value
                   ? 'bg-blue-600 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  : isDarkMode 
+                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
               {period.label}
@@ -350,65 +378,73 @@ const MachineView: React.FC = () => {
 
       {/* Detailed Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-          <h3 className="text-lg font-semibold text-white mb-4">Performance Metrics</h3>
+        <div className={`p-6 rounded-lg border ${
+          isDarkMode 
+            ? 'bg-gray-800 border-gray-700' 
+            : 'bg-white border-gray-200 shadow-sm'
+        }`}>
+          <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Performance Metrics</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Availability</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Availability</span>
               <div className="flex items-center space-x-2">
-                <div className="w-20 bg-gray-700 rounded-full h-2">
+                <div className={`w-20 rounded-full h-2 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
                   <div 
                     className="bg-green-500 h-2 rounded-full" 
                     style={{ width: `${stats.availability}%` }}
                   ></div>
                 </div>
-                <span className="text-white font-medium">{stats.availability}%</span>
+                <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{stats.availability}%</span>
               </div>
             </div>
             
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Quality</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Quality</span>
               <div className="flex items-center space-x-2">
-                <div className="w-20 bg-gray-700 rounded-full h-2">
+                <div className={`w-20 rounded-full h-2 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
                   <div 
                     className="bg-blue-500 h-2 rounded-full" 
                     style={{ width: `${stats.quality}%` }}
                   ></div>
                 </div>
-                <span className="text-white font-medium">{stats.quality}%</span>
+                <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{stats.quality}%</span>
               </div>
             </div>
             
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Performance</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Performance</span>
               <div className="flex items-center space-x-2">
-                <div className="w-20 bg-gray-700 rounded-full h-2">
+                <div className={`w-20 rounded-full h-2 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
                   <div 
                     className="bg-yellow-500 h-2 rounded-full" 
                     style={{ width: `${stats.performance}%` }}
                   ></div>
                 </div>
-                <span className="text-white font-medium">{stats.performance}%</span>
+                <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{stats.performance}%</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-          <h3 className="text-lg font-semibold text-white mb-4">Quality Metrics</h3>
+        <div className={`p-6 rounded-lg border ${
+          isDarkMode 
+            ? 'bg-gray-800 border-gray-700' 
+            : 'bg-white border-gray-200 shadow-sm'
+        }`}>
+          <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Quality Metrics</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Good Units</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Good Units</span>
               <span className="text-green-400 font-medium">
                 {stats.totalUnitsProduced - stats.totalDefectiveUnits}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Defective Units</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Defective Units</span>
               <span className="text-red-400 font-medium">{stats.totalDefectiveUnits}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Defect Rate</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Defect Rate</span>
               <span className="text-yellow-400 font-medium">
                 {stats.totalUnitsProduced > 0 
                   ? ((stats.totalDefectiveUnits / stats.totalUnitsProduced) * 100).toFixed(1)
@@ -419,11 +455,15 @@ const MachineView: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-          <h3 className="text-lg font-semibold text-white mb-4">Reliability</h3>
+        <div className={`p-6 rounded-lg border ${
+          isDarkMode 
+            ? 'bg-gray-800 border-gray-700' 
+            : 'bg-white border-gray-200 shadow-sm'
+        }`}>
+          <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Reliability</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Current Status</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Current Status</span>
               <span className={`font-medium capitalize ${
                 machine.status === 'running' ? 'text-green-400' :
                 machine.status === 'inactive' ? 'text-red-400' :
@@ -434,15 +474,15 @@ const MachineView: React.FC = () => {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">MTBF</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>MTBF</span>
               <span className="text-blue-400 font-medium">{stats.mtbf} minutes</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">MTTR</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>MTTR</span>
               <span className="text-purple-400 font-medium">{stats.mttr} minutes</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Running Time</span>
+              <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Running Time</span>
               <span className="text-green-400 font-medium">
                 {Math.round((stats.totalRunningMinutes || 0) / 60 * 10) / 10}h
               </span>
@@ -452,10 +492,14 @@ const MachineView: React.FC = () => {
       </div>
 
       {/* Production Timeline */}
-      <div className="bg-gray-800 rounded-lg border border-gray-700">
-        <div className="p-6 border-b border-gray-700">
-          <h2 className="text-lg font-semibold text-white">Real-time Production Timeline</h2>
-          <p className="text-sm text-gray-400 mt-1">
+      <div className={`rounded-lg border ${
+        isDarkMode 
+          ? 'bg-gray-800 border-gray-700' 
+          : 'bg-white border-gray-200 shadow-sm'
+      }`}>
+        <div className={`p-6 border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+          <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Real-time Production Timeline</h2>
+          <p className={`text-sm mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
             Live production data with operator and mold information
           </p>
         </div>

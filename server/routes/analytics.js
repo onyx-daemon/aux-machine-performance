@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const ProductionRecord = require('../models/ProductionRecord');
 const Machine = require('../models/Machine');
 const Config = require('../models/Config');
+const nodemailer = require('nodemailer');
 const { auth } = require('../middleware/auth');
 
 const router = express.Router();
@@ -216,6 +217,23 @@ router.post('/stoppage', auth, async (req, res) => {
 
     await productionRecord.save();
 
+    // Send email notification for breakdown stoppages
+    if (reason === 'breakdown') {
+      try {
+        await sendBreakdownNotification({
+          machineId,
+          machineName: (await Machine.findById(machineId))?.name || 'Unknown Machine',
+          sapNotificationNumber,
+          description,
+          duration,
+          startTime: new Date(`${date}T${hour.toString().padStart(2, '0')}:00:00`),
+          reportedBy: req.user.username
+        });
+      } catch (emailError) {
+        console.error('Failed to send breakdown notification email:', emailError);
+        // Don't fail the request if email fails
+      }
+    }
     // Emit socket event
     io.emit('stoppage-added', {
       machineId,
@@ -514,5 +532,94 @@ router.get('/machine-stats/:machineId', auth, async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+
+// Email notification function for breakdowns
+async function sendBreakdownNotification(breakdownData) {
+  try {
+    const config = await Config.findOne();
+    if (!config || !config.email.recipients.length) {
+      console.log('No email configuration found for breakdown notification');
+      return;
+    }
+
+    const transporter = nodemailer.createTransporter({
+      service: 'gmail',
+      auth: {
+        user: config.email.senderEmail,
+        pass: config.email.senderPassword
+      }
+    });
+
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #dc2626, #ef4444); color: white; padding: 20px; border-radius: 8px 8px 0 0;">
+          <h1 style="margin: 0; font-size: 24px;">🚨 BREAKDOWN ALERT</h1>
+          <p style="margin: 5px 0 0 0; opacity: 0.9;">Immediate attention required</p>
+        </div>
+        
+        <div style="background: #f8fafc; padding: 20px; border: 1px solid #e2e8f0; border-top: none;">
+          <h2 style="color: #1e293b; margin-top: 0;">Breakdown Details</h2>
+          
+          <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+            <tr style="background: #ffffff;">
+              <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Machine:</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0; color: #1e293b;">${breakdownData.machineName}</td>
+            </tr>
+            <tr style="background: #f1f5f9;">
+              <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #475569;">SAP Notification:</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0; color: #dc2626; font-weight: bold;">${breakdownData.sapNotificationNumber}</td>
+            </tr>
+            <tr style="background: #ffffff;">
+              <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Start Time:</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0; color: #1e293b;">${breakdownData.startTime.toLocaleString()}</td>
+            </tr>
+            <tr style="background: #f1f5f9;">
+              <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Duration:</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0; color: #dc2626;">${breakdownData.duration} minutes</td>
+            </tr>
+            <tr style="background: #ffffff;">
+              <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Reported By:</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0; color: #1e293b;">${breakdownData.reportedBy}</td>
+            </tr>
+          </table>
+          
+          ${breakdownData.description ? `
+            <div style="background: #ffffff; padding: 15px; border: 1px solid #e2e8f0; border-radius: 6px; margin: 15px 0;">
+              <h3 style="margin: 0 0 10px 0; color: #1e293b;">Description:</h3>
+              <p style="margin: 0; color: #475569; line-height: 1.5;">${breakdownData.description}</p>
+            </div>
+          ` : ''}
+          
+          <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 15px; margin: 20px 0;">
+            <h3 style="color: #dc2626; margin: 0 0 10px 0;">⚡ Action Required</h3>
+            <p style="margin: 0; color: #7f1d1d;">
+              This breakdown requires immediate attention. Please coordinate with the maintenance team and update the SAP system accordingly.
+            </p>
+          </div>
+          
+          <div style="text-align: center; margin: 25px 0;">
+            <p style="color: #64748b; font-size: 14px; margin: 0;">
+              Generated by Dawlance LineSentry System<br>
+              ${new Date().toLocaleString()}
+            </p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const mailOptions = {
+      from: config.email.senderEmail,
+      to: config.email.recipients.join(','),
+      subject: `🚨 BREAKDOWN ALERT - ${breakdownData.machineName} - SAP: ${breakdownData.sapNotificationNumber}`,
+      html: emailHtml
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log(`Breakdown notification sent for machine ${breakdownData.machineName}`);
+  } catch (error) {
+    console.error('Error sending breakdown notification:', error);
+    throw error;
+  }
+}
 
 module.exports = router;
