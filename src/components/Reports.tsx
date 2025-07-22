@@ -266,19 +266,31 @@ const Reports: React.FC = () => {
       </div>
 
       {/* Generate Report Form */}
-      <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">Generate New Report</h2>
+      <div className={`rounded-lg border p-6 ${
+        isDarkMode 
+          ? 'bg-gray-800 border-gray-700' 
+          : 'bg-white border-gray-200 shadow-sm'
+      }`}>
+        <h2 className={`text-lg font-semibold mb-4 ${
+          isDarkMode ? 'text-white' : 'text-gray-900'
+        }`}>Generate New Report</h2>
         
         <form onSubmit={handleGenerateReport} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>
                 Report Type
               </label>
               <select
                 value={reportForm.type}
                 onChange={(e) => setReportForm({...reportForm, type: e.target.value as any})}
-                className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode 
+                    ? 'bg-gray-700 border-gray-600 text-white' 
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
               >
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
@@ -288,37 +300,55 @@ const Reports: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>
                 Start Date
               </label>
               <input
                 type="date"
                 value={reportForm.startDate}
                 onChange={(e) => setReportForm({...reportForm, startDate: e.target.value})}
-                className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode 
+                    ? 'bg-gray-700 border-gray-600 text-white' 
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>
                 End Date
               </label>
               <input
                 type="date"
                 value={reportForm.endDate}
                 onChange={(e) => setReportForm({...reportForm, endDate: e.target.value})}
-                className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode 
+                    ? 'bg-gray-700 border-gray-600 text-white' 
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>
                 Department (Optional)
               </label>
               <select
                 value={reportForm.departmentId}
                 onChange={(e) => setReportForm({...reportForm, departmentId: e.target.value})}
-                className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode 
+                    ? 'bg-gray-700 border-gray-600 text-white' 
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
               >
                 <option value="">All Departments</option>
                 {departments.map((dept) => (
@@ -330,13 +360,19 @@ const Reports: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>
                 Machine (Optional)
               </label>
               <select
                 value={reportForm.machineId}
                 onChange={(e) => setReportForm({...reportForm, machineId: e.target.value})}
-                className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode 
+                    ? 'bg-gray-700 border-gray-600 text-white' 
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
               >
                 <option value="">All Machines</option>
                 {machines.map((machine) => (
@@ -366,14 +402,24 @@ const Reports: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
+      <div className={`rounded-lg border p-4 ${
+        isDarkMode 
+          ? 'bg-gray-800 border-gray-700' 
+          : 'bg-white border-gray-200 shadow-sm'
+      }`}>
         <div className="flex items-center space-x-4">
-          <Filter className="h-5 w-5 text-gray-400" />
+          <Filter className={`h-5 w-5 ${
+            isDarkMode ? 'text-gray-400' : 'text-gray-600'
+          }`} />
           <div className="flex space-x-4 flex-1">
             <select
               value={filters.type}
               onChange={(e) => setFilters({...filters, type: e.target.value})}
-              className="bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                isDarkMode 
+                  ? 'bg-gray-700 border-gray-600 text-white' 
+                  : 'bg-white border-gray-300 text-gray-900'
+              }`}
             >
               <option value="">All Types</option>
               <option value="daily">Daily</option>
@@ -385,7 +431,11 @@ const Reports: React.FC = () => {
             <select
               value={filters.departmentId}
               onChange={(e) => setFilters({...filters, departmentId: e.target.value})}
-              className="bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                isDarkMode 
+                  ? 'bg-gray-700 border-gray-600 text-white' 
+                  : 'bg-white border-gray-300 text-gray-900'
+              }`}
             >
               <option value="">All Departments</option>
               {departments.map((dept) => (
@@ -399,39 +449,67 @@ const Reports: React.FC = () => {
       </div>
 
       {/* Reports List */}
-      <div className="bg-gray-800 rounded-lg border border-gray-700">
-        <div className="p-6 border-b border-gray-700">
-          <h2 className="text-lg font-semibold text-white">Generated Reports</h2>
+      <div className={`rounded-lg border ${
+        isDarkMode 
+          ? 'bg-gray-800 border-gray-700' 
+          : 'bg-white border-gray-200 shadow-sm'
+      }`}>
+        <div className={`p-6 border-b ${
+          isDarkMode ? 'border-gray-700' : 'border-gray-200'
+        }`}>
+          <h2 className={`text-lg font-semibold ${
+            isDarkMode ? 'text-white' : 'text-gray-900'
+          }`}>Generated Reports</h2>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-700">
-            <thead className="bg-gray-750">
+          <table className={`min-w-full divide-y ${
+            isDarkMode ? 'divide-gray-700' : 'divide-gray-200'
+          }`}>
+            <thead className={isDarkMode ? 'bg-gray-750' : 'bg-gray-50'}>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Report
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Period
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Key Metrics
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Generated
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-right text-xs font-medium uppercase tracking-wider ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                }`}>
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-gray-800 divide-y divide-gray-700">
+            <tbody className={`divide-y ${
+              isDarkMode 
+                ? 'bg-gray-800 divide-gray-700' 
+                : 'bg-white divide-gray-200'
+            }`}>
               {reports.map((report) => (
-                <tr key={report._id} className="hover:bg-gray-750">
+                <tr key={report._id} className={
+                  isDarkMode ? 'hover:bg-gray-750' : 'hover:bg-gray-50'
+                }>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <FileText className="h-8 w-8 text-blue-400" />
+                        <FileText className={`h-8 w-8 ${
+                          isDarkMode ? 'text-blue-400' : 'text-blue-500'
+                        }`} />
                       </div>
                       <div className="ml-4">
                         <div className="flex items-center space-x-2">
@@ -444,14 +522,18 @@ const Reports: React.FC = () => {
                             </span>
                           )}
                         </div>
-                        <div className="text-sm text-gray-400 mt-1">
+                        <div className={`text-sm mt-1 ${
+                          isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                        }`}>
                           {report.departmentId?.name || 'All Departments'} • {report.machineId?.name || 'All Machines'}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-white">
+                    <div className={`text-sm ${
+                      isDarkMode ? 'text-white' : 'text-gray-900'
+                    }`}>
                       {new Date(report.period.start).toLocaleDateString()} - {new Date(report.period.end).toLocaleDateString()}
                     </div>
                   </td>
@@ -472,10 +554,14 @@ const Reports: React.FC = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-300">
+                    <div className={`text-sm ${
+                      isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                       {new Date(report.createdAt).toLocaleDateString()}
                     </div>
-                    <div className="text-xs text-gray-400">
+                    <div className={`text-xs ${
+                      isDarkMode ? 'text-gray-400' : 'text-gray-500'
+                    }`}>
                       by {report.generatedBy.username}
                     </div>
                   </td>
@@ -483,21 +569,33 @@ const Reports: React.FC = () => {
                     <div className="flex justify-end space-x-2">
                       <button
                         onClick={() => handleDownloadPDF(report._id, report.type, report.period.start.split('T')[0])}
-                        className="text-blue-400 hover:text-blue-300 p-1 rounded-md hover:bg-gray-700"
+                        className={`p-1 rounded-md transition-colors ${
+                          isDarkMode 
+                            ? 'text-blue-400 hover:text-blue-300 hover:bg-gray-700' 
+                            : 'text-blue-500 hover:text-blue-700 hover:bg-blue-50'
+                        }`}
                         title="Download PDF"
                       >
                         <Download className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleEmailReport(report._id)}
-                        className="text-green-400 hover:text-green-300 p-1 rounded-md hover:bg-gray-700"
+                        className={`p-1 rounded-md transition-colors ${
+                          isDarkMode 
+                            ? 'text-green-400 hover:text-green-300 hover:bg-gray-700' 
+                            : 'text-green-500 hover:text-green-700 hover:bg-green-50'
+                        }`}
                         title="Email Report"
                       >
                         <Mail className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteReport(report._id)}
-                        className="text-red-400 hover:text-red-300 p-1 rounded-md hover:bg-gray-700"
+                        className={`p-1 rounded-md transition-colors ${
+                          isDarkMode 
+                            ? 'text-red-400 hover:text-red-300 hover:bg-gray-700' 
+                            : 'text-red-500 hover:text-red-700 hover:bg-red-50'
+                        }`}
                         title="Delete Report"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -511,9 +609,13 @@ const Reports: React.FC = () => {
 
           {reports.length === 0 && (
             <div className="text-center py-12">
-              <FileText className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-400 mb-2">No reports found</h3>
-              <p className="text-gray-500">Generate your first report to get started</p>
+              <FileText className={`h-12 w-12 mx-auto mb-4 ${
+                isDarkMode ? 'text-gray-600' : 'text-gray-400'
+              }`} />
+              <h3 className={`text-lg font-medium mb-2 ${
+                isDarkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>No reports found</h3>
+              <p className={isDarkMode ? 'text-gray-500' : 'text-gray-500'}>Generate your first report to get started</p>
             </div>
           )}
         </div>

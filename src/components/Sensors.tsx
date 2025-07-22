@@ -292,15 +292,31 @@ const Sensors: React.FC = () => {
 
       {/* Sensor Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className={`fixed inset-0 flex items-center justify-center z-50 ${
+          isDarkMode ? 'bg-black bg-opacity-50' : 'bg-gray-900 bg-opacity-50'
+        }`}>
           <div className="bg-gray-800 rounded-lg border border-gray-700 w-full max-w-md mx-4">
             <div className="flex items-center justify-between p-6 border-b border-gray-700">
               <h3 className="text-lg font-semibold text-white">
+            isDarkMode 
+              ? 'bg-gray-800 border-gray-700' 
+              : 'bg-white border-gray-200'
+          }`}>
+            <div className={`flex items-center justify-between p-6 border-b ${
+              isDarkMode ? 'border-gray-700' : 'border-gray-200'
+            }`}>
+              <h3 className={`text-lg font-semibold ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
                 {editingSensor ? 'Edit Sensor' : 'Add New Sensor'}
               </h3>
               <button
                 onClick={resetForm}
-                className="text-gray-400 hover:text-white transition-colors"
+                className={`transition-colors ${
+                  isDarkMode 
+                    ? 'text-gray-400 hover:text-white' 
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -308,7 +324,9 @@ const Sensors: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Sensor Name *
                 </label>
                 <input
@@ -316,33 +334,49 @@ const Sensors: React.FC = () => {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter sensor name"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Description
                 </label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   rows={3}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   placeholder="Enter sensor description"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                 Sensor Type *
                 </label>
                 <select
                 required
                 value={formData.sensorType}
                 onChange={(e) => setFormData({ ...formData, sensorType: e.target.value as any })}
-                className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode 
+                    ? 'bg-gray-700 border-gray-600 text-white' 
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
                 >
                 <option value="power">Power Sensor</option>
                 <option value="unit-cycle">Unit Cycle Sensor</option>
@@ -350,14 +384,20 @@ const Sensors: React.FC = () => {
             </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Department *
                 </label>
                 <select
                   required
                   value={selectedDepartment}
                   onChange={(e) => setSelectedDepartment(e.target.value)}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                 >
                   <option value="">Select department</option>
                   {departments.map((dept) => (
@@ -369,14 +409,20 @@ const Sensors: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   Machine *
                 </label>
                 <select
                   required
                   value={formData.machineId}
                   onChange={(e) => setFormData({ ...formData, machineId: e.target.value })}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDarkMode 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                  }`}
                   disabled={!selectedDepartment}
                 >
                   <option value="">Select machine</option>
@@ -389,7 +435,9 @@ const Sensors: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className={`block text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                     Active Status
                 </label>
                 <div className="flex items-center">
@@ -400,8 +448,12 @@ const Sensors: React.FC = () => {
                         onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
                         className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    <span className="ml-3 text-sm text-gray-300">
+                    <div className={`w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 ${
+                      isDarkMode ? 'bg-gray-700' : 'bg-gray-300'
+                    }`}></div>
+                    <span className={`ml-3 text-sm ${
+                      isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                         {formData.isActive ? 'Active' : 'Inactive'}
                     </span>
                     </label>
@@ -419,7 +471,11 @@ const Sensors: React.FC = () => {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                  className={`px-4 py-2 rounded-md transition-colors ${
+                    isDarkMode 
+                      ? 'bg-gray-600 text-white hover:bg-gray-700' 
+                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                  }`}
                 >
                   Cancel
                 </button>
@@ -430,9 +486,17 @@ const Sensors: React.FC = () => {
       )}
 
       {/* Sensors List */}
-      <div className="bg-gray-800 rounded-lg border border-gray-700">
-        <div className="p-6 border-b border-gray-700">
-          <h2 className="text-lg font-semibold text-white">System Sensors</h2>
+      <div className={`rounded-lg border ${
+        isDarkMode 
+          ? 'bg-gray-800 border-gray-700' 
+          : 'bg-white border-gray-200 shadow-sm'
+      }`}>
+        <div className={`p-6 border-b ${
+          isDarkMode ? 'border-gray-700' : 'border-gray-200'
+        }`}>
+          <h2 className={`text-lg font-semibold ${
+            isDarkMode ? 'text-white' : 'text-gray-900'
+          }`}>System Sensors</h2>
         </div>
 
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
@@ -443,7 +507,11 @@ const Sensors: React.FC = () => {
             return (
               <div 
                 key={sensor._id} 
-                className={`bg-gray-700 rounded-lg border border-gray-600 p-4 hover:border-blue-500 transition-colors ${
+                className={`rounded-lg border p-4 hover:border-blue-500 transition-colors ${
+                  isDarkMode 
+                    ? 'bg-gray-700 border-gray-600' 
+                    : 'bg-white border-gray-200 shadow-sm'
+                } ${
                   !sensor.isActive ? 'opacity-70' : ''
                 }`}
               >
@@ -453,8 +521,12 @@ const Sensors: React.FC = () => {
                       {getSensorIcon(sensor.sensorType)}
                     </div>
                     <div>
-                      <h3 className="font-medium text-white">{sensor.name}</h3>
-                      <p className="text-xs text-gray-400 capitalize">
+                      <h3 className={`font-medium ${
+                        isDarkMode ? 'text-white' : 'text-gray-900'
+                      }`}>{sensor.name}</h3>
+                      <p className={`text-xs capitalize ${
+                        isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                      }`}>
                         {sensor.sensorType.replace('-', ' ')} Sensor
                       </p>
                     </div>
@@ -463,14 +535,22 @@ const Sensors: React.FC = () => {
                   <div className="flex items-center space-x-1">
                     <button
                       onClick={() => handleEdit(sensor)}
-                      className="text-blue-400 hover:text-blue-300 p-1"
+                      className={`p-1 ${
+                        isDarkMode 
+                          ? 'text-blue-400 hover:text-blue-300' 
+                          : 'text-blue-500 hover:text-blue-700'
+                      }`}
                       title="Edit sensor"
                     >
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleDelete(sensor._id)}
-                      className="text-red-400 hover:text-red-300 p-1"
+                      className={`p-1 ${
+                        isDarkMode 
+                          ? 'text-red-400 hover:text-red-300' 
+                          : 'text-red-500 hover:text-red-700'
+                      }`}
                       title="Delete sensor"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -479,31 +559,37 @@ const Sensors: React.FC = () => {
                 </div>
 
                 {sensor.description && (
-                  <p className="text-sm text-gray-300 mb-3 line-clamp-2">
+                  <p className={`text-sm mb-3 line-clamp-2 ${
+                    isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
                     {sensor.description}
                   </p>
                 )}
 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Machine:</span>
-                    <span className="text-white font-medium">
+                    <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Machine:</span>
+                    <span className={`font-medium ${
+                      isDarkMode ? 'text-white' : 'text-gray-900'
+                    }`}>
                       {machine?.name || 'Unknown'}
                     </span>
                   </div>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Department:</span>
+                    <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Department:</span>
                     <div className="flex items-center space-x-1">
-                      <Building2 className="h-3 w-3 text-gray-400" />
-                      <span className="text-white">
+                      <Building2 className={`h-3 w-3 ${
+                        isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                      }`} />
+                      <span className={isDarkMode ? 'text-white' : 'text-gray-900'}>
                         {department?.name || 'Unknown'}
                       </span>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Status:</span>
+                    <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Status:</span>
                     <span className={`text-xs px-2 py-1 rounded-full ${
                       sensor.isActive 
                         ? 'bg-green-900/50 text-green-300' 
@@ -520,9 +606,13 @@ const Sensors: React.FC = () => {
 
         {sensors.length === 0 && (
           <div className="text-center py-12">
-            <Cpu className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400">No sensors found</p>
-            <p className="text-gray-500 text-sm mt-1">Create your first sensor to get started</p>
+            <Cpu className={`h-12 w-12 mx-auto mb-4 ${
+              isDarkMode ? 'text-gray-600' : 'text-gray-400'
+            }`} />
+            <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>No sensors found</p>
+            <p className={`text-sm mt-1 ${
+              isDarkMode ? 'text-gray-500' : 'text-gray-500'
+            }`}>Create your first sensor to get started</p>
           </div>
         )}
       </div>

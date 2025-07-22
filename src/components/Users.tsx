@@ -247,7 +247,7 @@ const Users: React.FC = () => {
   }
 
   return (
-    <div className={`space-y-6 ${isDarkMode ? '' : 'min-h-screen bg-gray-50'}`}>
+      <div className="space-y-6">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -352,7 +352,9 @@ const Users: React.FC = () => {
 
       {/* Create User Modal */}
       {isCreating && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className={`fixed inset-0 flex items-center justify-center z-50 p-4 ${
+          isDarkMode ? 'bg-black bg-opacity-50' : 'bg-gray-900 bg-opacity-50'
+        }`}>
           <div className={`rounded-lg border w-full max-w-md ${
             isDarkMode 
               ? 'bg-gray-800 border-gray-700' 
@@ -513,7 +515,9 @@ const Users: React.FC = () => {
 
       {/* Edit User Modal */}
       {editingUser && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className={`fixed inset-0 flex items-center justify-center z-50 p-4 ${
+          isDarkMode ? 'bg-black bg-opacity-50' : 'bg-gray-900 bg-opacity-50'
+        }`}>
           <div className={`rounded-lg border w-full max-w-md ${
             isDarkMode 
               ? 'bg-gray-800 border-gray-700' 

@@ -155,14 +155,13 @@ const Configuration: React.FC = () => {
 
   if (!isAdmin) {
     return (
-      <div className={`border px-4 py-3 rounded-md ${
+      <div className={`border px-4 py-3 rounded-md flex items-center ${
         isDarkMode 
           ? 'bg-red-900/50 border-red-500 text-red-300'
           : 'bg-red-50 border-red-200 text-red-700'
       }`}>
-        <div className="flex items-center">
-          <span>Access denied. Admin privileges required.</span>
-        </div>
+        <AlertTriangle className="h-4 w-4 mr-2" />
+        <span>Access denied. Admin privileges required.</span>
       </div>
     );
   }
@@ -176,7 +175,7 @@ const Configuration: React.FC = () => {
   }
 
   return (
-    <div className={`space-y-6 ${isDarkMode ? '' : 'min-h-screen bg-gray-50'}`}>
+    <div className="space-y-6">
       {/* Toast container */}
       <ToastContainer
         position="top-right"
@@ -193,7 +192,9 @@ const Configuration: React.FC = () => {
       
       {/* Header */}
       <div className="flex items-center space-x-4">
-        <Settings className="h-8 w-8 text-blue-400" />
+        <Settings className={`h-8 w-8 ${
+          isDarkMode ? 'text-blue-400' : 'text-blue-500'
+        }`} />
         <div>
           <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>System Configuration</h1>
           <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Configure PLC settings, email alerts, and sensor mappings</p>
@@ -215,7 +216,7 @@ const Configuration: React.FC = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === tab.id
-                  ? 'border-blue-500 text-blue-400'
+                  ? `border-blue-500 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`
                   : `border-transparent ${isDarkMode ? 'text-gray-400 hover:text-gray-300 hover:border-gray-300' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'}`
               }`}
             >
@@ -236,7 +237,9 @@ const Configuration: React.FC = () => {
               : 'bg-white border-gray-200 shadow-sm'
           }`}>
             <div className="flex items-center space-x-2 mb-4">
-              <Network className="h-5 w-5 text-blue-400" />
+              <Network className={`h-5 w-5 ${
+                isDarkMode ? 'text-blue-400' : 'text-blue-500'
+              }`} />
               <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>PLC Connection Settings</h2>
             </div>
             
@@ -323,7 +326,9 @@ const Configuration: React.FC = () => {
               : 'bg-white border-gray-200 shadow-sm'
           }`}>
             <div className="flex items-center space-x-2 mb-4">
-              <Mail className="h-5 w-5 text-blue-400" />
+              <Mail className={`h-5 w-5 ${
+                isDarkMode ? 'text-blue-400' : 'text-blue-500'
+              }`} />
               <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Outlook Email Alert Settings</h2>
             </div>
             
@@ -422,7 +427,9 @@ const Configuration: React.FC = () => {
               : 'bg-white border-gray-200 shadow-sm'
           }`}>
             <div className="flex items-center space-x-2 mb-4">
-              <Settings className="h-5 w-5 text-blue-400" />
+              <Settings className={`h-5 w-5 ${
+                isDarkMode ? 'text-blue-400' : 'text-blue-500'
+              }`} />
               <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Signal Timeout Settings</h2>
             </div>
             
@@ -511,7 +518,9 @@ const Configuration: React.FC = () => {
               }`}>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
-                    <Clock className="h-5 w-5 text-blue-400" />
+                    <Clock className={`h-5 w-5 ${
+                      isDarkMode ? 'text-blue-400' : 'text-blue-500'
+                    }`} />
                     <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Shift Management</h2>
                   </div>
                   <button
@@ -614,7 +623,9 @@ const Configuration: React.FC = () => {
                                 }}
                                 className="sr-only peer"
                               />
-                              <div className={`relative w-11 h-6 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 ${
+                              <div className={`relative w-11 h-6 peer-focus:outline-none peer-focus:ring-4 ${
+                                isDarkMode ? 'peer-focus:ring-blue-300' : 'peer-focus:ring-blue-200'
+                              } rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 ${
                                 isDarkMode ? 'bg-gray-600' : 'bg-gray-300'
                               }`}></div>
                               <span className={`ml-2 text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Active</span>
@@ -669,7 +680,9 @@ const Configuration: React.FC = () => {
                 : 'bg-white border-gray-200 shadow-sm'
             }`}>
               <div className="flex items-center space-x-2 mb-4">
-                <Plus className="h-5 w-5 text-blue-400" />
+                <Plus className={`h-5 w-5 ${
+                  isDarkMode ? 'text-blue-400' : 'text-blue-500'
+                }`} />
                 <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Create Pin Mapping</h2>
               </div>
               
@@ -748,7 +761,9 @@ const Configuration: React.FC = () => {
                       isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
                     }`}>
                       <div className="flex items-center space-x-4">
-                        <div className="bg-blue-600 text-white px-3 py-1 rounded text-sm font-mono">
+                        <div className={`text-white px-3 py-1 rounded text-sm font-mono ${
+                          isDarkMode ? 'bg-blue-600' : 'bg-blue-500'
+                        }`}>
                           {mapping.pinId}
                         </div>
                         <div>
@@ -802,7 +817,7 @@ const Configuration: React.FC = () => {
                     if (mapping) {
                       statusClass = isDarkMode
                         ? 'bg-green-900/50 border-green-500 text-green-300'
-                        : 'bg-green-100 border-green-400 text-green-700';
+                        : 'bg-green-100 border-green-500 text-green-700';
                       statusText = 'Mapped';
                     }
                     
